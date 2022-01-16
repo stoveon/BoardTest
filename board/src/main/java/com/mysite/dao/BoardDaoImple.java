@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public class BoardDaoImple {
 
 	@Autowired
-	SqlSessionTemplate sqlSessionTemplate;
+	private SqlSessionTemplate sqlSessionTemplate;
 }
