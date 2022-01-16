@@ -10,7 +10,13 @@ public class BoardVo {
 	private String content;
 	private String fileName;
 	private Date regdate;
-
+	public BoardVo(String writer, String title, String content, String fileName) {
+		super();
+		this.writer = writer;
+		this.title = title;
+		this.content = content;
+		this.fileName = fileName;
+	}
 	public int getNum() {
 		return num;
 	}

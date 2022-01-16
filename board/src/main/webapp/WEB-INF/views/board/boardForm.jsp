@@ -9,7 +9,7 @@
 <body>
 <h2>게시글 등록 페이지</h2>
 <div id="BoardMain">
-	<form method="post" enctype="multipart/form-data">
+	<form action="/boardIn" method="post" enctype="multipart/form-data">
 		작성자 : <input type="text" name="writer" placeholder="작성자 입력"><br>
 		제목 : <input type="text" name="title" placeholder="제목 입력"><br>
 		내용<br>
