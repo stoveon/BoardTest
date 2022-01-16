@@ -56,9 +56,9 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<welcome-page>
-		<location>/index.jsp</location>
-	</welcome-page>
+	<welcome-file-list>
+		<welcome-file>/index.jsp</welcome-file>
+	</welcome-file-list>
 	
 	<!-- version 3.0에서 error-page지원  -->
 	<error-page>
