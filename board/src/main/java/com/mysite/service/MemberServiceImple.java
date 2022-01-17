@@ -21,7 +21,6 @@ public class MemberServiceImple implements IMemberService{
 		member.setName(member.getName().replace(" ", ""));
 		member.setEmail(member.getEmail().replace(" ", ""));
 		member.setPhone(member.getPhone().replace(" ", ""));
-		System.out.println(member.toString());
 		memberDao.memberRegist(member);
 	}
 

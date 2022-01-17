@@ -56,7 +56,7 @@ public class MemberController {
 		if(!(Pattern.matches(patternNumber, memCmd.getNum()) ||
 				Pattern.matches(patternName, memCmd.getName()) || 
 				Pattern.matches(patternPhone, memCmd.getPhone()) ||
-				Pattern.matches(patternEmail, memCmd.getEmail())) || memCmd.getPhone().length() < 11) {
+				Pattern.matches(patternEmail, memCmd.getEmail())) || memCmd.getPhone().length() < 13) {
 			view.setViewName("member/registForm");
 			view.addObject("reg", "nottype");			
 			view.addObject("num", memCmd.getNum());
@@ -97,10 +97,38 @@ public class MemberController {
 		return view;
 	}	
 	@RequestMapping(value="/memberUp", method=RequestMethod.POST)
-	public ModelAndView memberUpdate(int agoNum, MemberVo member) throws Exception {
+	public ModelAndView memberUpdate(int agoNum, MemberRegCommand member) throws Exception {
 		logger.info("직원 정보 수정 요청");
 		ModelAndView view = new ModelAndView();
-		if(memberService.memberExist(member.getNum()) != null) {
+		if(member.getNum() == "" || member.getNum() == null ||
+			member.getMemberRank() == "" ||member.getMemberRank() == null || 
+			member.getName() == "" || member.getName() == null ||
+			member.getPhone() == "" || member.getPhone() == null ||
+			member.getEmail() == "" || member.getEmail() == null) {
+				view.setViewName("member/registForm");
+				view.addObject("reg", "isnull");			
+				view.addObject("num", member.getNum());
+				view.addObject("name", member.getName());
+				view.addObject("memberRank", member.getMemberRank());
+				view.addObject("phone", member.getPhone());
+				view.addObject("email", member.getEmail());
+				return view;
+			}
+			if(!(Pattern.matches(patternNumber, member.getNum()) ||
+					Pattern.matches(patternName, member.getName()) || 
+					Pattern.matches(patternPhone, member.getPhone()) ||
+					Pattern.matches(patternEmail, member.getEmail())) || member.getPhone().length() < 13) {
+				view.setViewName("member/registForm");
+				view.addObject("reg", "nottype");			
+				view.addObject("num", member.getNum());
+				view.addObject("name", member.getName());
+				view.addObject("memberRank", member.getMemberRank());
+				view.addObject("phone", member.getPhone());
+				view.addObject("email", member.getEmail());
+				return view;
+			}
+		int num = Integer.parseInt(member.getNum());
+		if(memberService.memberExist(num) != null) {
 			view.setViewName("member/detailForm");
 			view.addObject("reg", "chagenum");			
 			view.addObject("num", member.getNum());
@@ -110,7 +138,7 @@ public class MemberController {
 			view.addObject("email", member.getEmail());
 			return view;			
 		}else {
-			MemberUpdateCommand memUpCmd = new MemberUpdateCommand(agoNum, member.getNum(), 
+			MemberUpdateCommand memUpCmd = new MemberUpdateCommand(agoNum, num, 
 					member.getMemberRank(), member.getName(), member.getPhone(), member.getEmail());
 			memberService.memberUpdate(memUpCmd);
 			view.setViewName("redirect:memberLi");
@@ -141,6 +169,9 @@ public class MemberController {
 	public ModelAndView memberSearch(String searchWord) throws Exception {
 		logger.info("직원 정보 검색 요청");
 		ModelAndView view = new ModelAndView();
+		if(searchWord == null) {
+			view.setViewName("redirect:memberLi");			
+		}
 		List<MemberVo> memberList = memberService.searchMember(searchWord);
 		view.addObject("memberList", memberList);
 		view.addObject("searchWord", searchWord);

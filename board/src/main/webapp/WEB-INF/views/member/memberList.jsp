@@ -36,13 +36,7 @@
 						<fmt:formatNumber value="${memberOne.getNum()}" var="numFormat" pattern="000"></fmt:formatNumber>
 						${numFormat}</td>
 						<td>${memberOne.getName()}</td>
-						<td>
-	<%--  					<c:set var="phone1"value="${fn:substring(memberOne.getPhone(), 1, 3)}" />
-						<c:set var="phone2"value="${fn:substring(memberOne.getPhone(), 3, 7)}" />
-						<c:set var="phone3"value="${fn:substring(memberOne.getPhone(), 7, 10)}" />
-						<c:set var="phone"value="${phone1-phone2-phone3}" /> --%>
-						${memberOne.getPhone()}
-						</td>
+						<td>${memberOne.getPhone()}</td>
 						<td>${memberOne.getMemberRank()}</td>
 						<td>${memberOne.getEmail()}</td>
 					</tr>
