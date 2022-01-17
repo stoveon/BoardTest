@@ -23,6 +23,7 @@
 			<caption>
 				<input type="text" placeholder="검색 단어 입력" name="searchWord" value="${searchWord}">
 				<button type="submit" onclick="form.action='<c:url value="/search" />'">검색</button>	
+				<button type="button" onclick="location.href='<c:url value="/memberIn" />'">직원등록</button>	
 				<button type="submit" onclick="form.action='<c:url value="/downDoc" />'">파일 저장</button>	
 			</caption>
 			<thead>

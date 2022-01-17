@@ -27,7 +27,7 @@ if(reg === 'isnull'){
 	전화전호 : <input type="text" name="phone" placeholder="전화번호" maxlength="13" value="${phone}"><br>
 	이메일 : <input type="email" name="email" placeholder="이메일" value="${email}"><br>
 	<input type="submit" value="등록">
-	<button onclick="history.go(-1)">취소</button>
+	<button type="button" onclick="history.go(-1)">취소</button>
 	</form>
 </div>
 </body>

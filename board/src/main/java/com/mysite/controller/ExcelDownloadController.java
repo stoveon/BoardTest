@@ -45,9 +45,6 @@ public class ExcelDownloadController {
 		}else {
 			memberList = memberService.memberListAll();
 		}
-		for(MemberVo m : memberList) {
-			System.out.println(m.toString());
-		}
 		
 		Date todayTime = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
@@ -129,13 +126,6 @@ public class ExcelDownloadController {
 	            	cell.setCellStyle(bodyStyle);
 	            	cell.setCellValue(member.getEmail());
 	        }
-        	
-        	sheet.autoSizeColumn(0);
-        	sheet.autoSizeColumn(1);
-        	sheet.autoSizeColumn(2);
-        	sheet.autoSizeColumn(3);
-        	sheet.autoSizeColumn(4);
-        	sheet.autoSizeColumn(5);
         	
 	        response.setContentType("Application/Msexcel");
 	        response.setHeader("Content-Disposition", "attachment;filename="+fileName);
