@@ -24,7 +24,7 @@ if(reg === 'isnull'){
 	직원 번호 : <input type="text" name="num" placeholder="직원번호" maxlength="3" value="${num}"><br>
 	직급 : <input type="text" name="memberRank" placeholder="직급" value="${memberRank}"><br>
 	이름 : <input type="text" name="name" placeholder="이름" value="${name}"><br>
-	전화전호 : <input type="text" name="phone" placeholder="- 없이 숫자만 입력" maxlength="11" value="${phone}"><br>
+	전화전호 : <input type="text" name="phone" placeholder="전화번호" maxlength="13" value="${phone}"><br>
 	이메일 : <input type="email" name="email" placeholder="이메일" value="${email}"><br>
 	<input type="submit" value="등록">
 	<button onclick="history.go(-1)">취소</button>

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mysite.service.MemberServiceImple;
 import com.mysite.vo.MemberRegCommand;
+import com.mysite.vo.MemberUpdateCommand;
 import com.mysite.vo.MemberVo;
 
 @Controller("memberController")
@@ -23,7 +24,7 @@ public class MemberController {
 	private static final String patternNumber = "^[0-9]*$";
 	private static final String patternName = "^[가-힣a-zA-Z]*$";
 	private static final String patternPhone = "^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$";
-	private static final String patternEmail = "\\\\w+@\\\\w+\\\\.\\\\w+(\\\\.\\\\w+)?";
+	private static final String patternEmail = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}";
 	
 	@Autowired
 	private MemberServiceImple memberService;
@@ -66,7 +67,6 @@ public class MemberController {
 			return view;
 		}
 		int num = Integer.parseInt(memCmd.getNum());
-		System.out.println(num);
 		if(memberService.memberExist(num) != null) {
 			view.setViewName("member/registForm");
 			view.addObject("reg", "chagenum");			
@@ -88,7 +88,6 @@ public class MemberController {
 		logger.info("직원 정보 수정 요청");
 		ModelAndView view = new ModelAndView();
 		MemberVo member = memberService.memberExist(num);
-		System.out.println(member.toString());
 		view.setViewName("member/detailForm");
 		view.addObject("num", member.getNum());
 		view.addObject("name", member.getName());
@@ -98,19 +97,32 @@ public class MemberController {
 		return view;
 	}	
 	@RequestMapping(value="/memberUp", method=RequestMethod.POST)
-	public ModelAndView memberUpdate(MemberVo member) throws Exception {
+	public ModelAndView memberUpdate(int agoNum, MemberVo member) throws Exception {
 		logger.info("직원 정보 수정 요청");
 		ModelAndView view = new ModelAndView();
-		view.setViewName("redirect:/member/boardRead?bo=");
-		
-		return view;
+		if(memberService.memberExist(member.getNum()) != null) {
+			view.setViewName("member/detailForm");
+			view.addObject("reg", "chagenum");			
+			view.addObject("num", member.getNum());
+			view.addObject("name", member.getName());
+			view.addObject("memberRank", member.getMemberRank());
+			view.addObject("phone", member.getPhone());
+			view.addObject("email", member.getEmail());
+			return view;			
+		}else {
+			MemberUpdateCommand memUpCmd = new MemberUpdateCommand(agoNum, member.getNum(), 
+					member.getMemberRank(), member.getName(), member.getPhone(), member.getEmail());
+			memberService.memberUpdate(memUpCmd);
+			view.setViewName("redirect:memberLi");
+			return view;			
+		}
 	}
 	
 	@RequestMapping(value="/memberDel")
-	public ModelAndView memberDelete() throws Exception {
+	public ModelAndView memberDelete(int num) throws Exception {
 		logger.info("직원 정보 삭제 요청");
 		ModelAndView view = new ModelAndView();
-		
+		memberService.memberDelete(num);
 		view.setViewName("redirect:memberLi");
 		return view;
 	}
@@ -125,13 +137,14 @@ public class MemberController {
 		return view;
 	}
 	
-	@RequestMapping(value="/search", method=RequestMethod.POST)
-	public ModelAndView memberSearch() throws Exception {
+	@RequestMapping(value="/search")
+	public ModelAndView memberSearch(String searchWord) throws Exception {
 		logger.info("직원 정보 검색 요청");
 		ModelAndView view = new ModelAndView();
-		view.setViewName("member/memberList");
-		List<MemberVo> memberList = memberService.memberListAll();
+		List<MemberVo> memberList = memberService.searchMember(searchWord);
 		view.addObject("memberList", memberList);
+		view.addObject("searchWord", searchWord);
+		view.setViewName("member/memberList");
 		return view;
 	}
 }

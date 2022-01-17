@@ -16,10 +16,11 @@
 	등록된 직원 정보가 없습니다.
 </c:if>
 <c:if test="${!empty memberList}">
+<h2>직원 목록</h2>
 	<form method="post">
-		<table>
+		<table style="text-align: center;">
 			<caption>
-				<input type="text" placeholder="검색 단어 입력" name="searchWord">
+				<input type="text" placeholder="검색 단어 입력" name="searchWord" value="${searchWord}">
 				<button type="submit" onclick="form.action='<c:url value="/search" />'">검색</button>	
 			</caption>
 			<thead>

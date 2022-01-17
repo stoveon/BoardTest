@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mysite.dao.MemberDaoImple;
+import com.mysite.vo.MemberUpdateCommand;
 import com.mysite.vo.MemberVo;
 
 @Service("memberService")
@@ -19,7 +20,6 @@ public class MemberServiceImple implements IMemberService{
 		member.setMemberRank(member.getMemberRank().replace(" ", ""));
 		member.setName(member.getName().replace(" ", ""));
 		member.setEmail(member.getEmail().replace(" ", ""));
-		member.setPhone(member.getPhone().replace("-", ""));
 		member.setPhone(member.getPhone().replace(" ", ""));
 		System.out.println(member.toString());
 		memberDao.memberRegist(member);
@@ -38,6 +38,17 @@ public class MemberServiceImple implements IMemberService{
 	@Override
 	public void memberDelete(int num) throws Exception {
 		memberDao.memberDelete(num);
+	}
+
+	@Override
+	public void memberUpdate(MemberUpdateCommand memUpCmd) throws Exception {
+		memberDao.memberUpdate(memUpCmd);		
+	}
+
+	@Override
+	public List<MemberVo> searchMember(String searchWord) throws Exception {
+		searchWord = searchWord.replace(" ", "");
+		return memberDao.searchMember(searchWord);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.mysite.service;
 
 import java.util.List;
 
+import com.mysite.vo.MemberUpdateCommand;
 import com.mysite.vo.MemberVo;
 
 public interface IMemberService {
@@ -13,4 +14,8 @@ public interface IMemberService {
 	public MemberVo memberExist(int num) throws Exception;
 	//직원 삭제
 	public void memberDelete(int num) throws Exception;
+	//직원 수정
+	public void memberUpdate(MemberUpdateCommand memUpCmd) throws Exception;
+	//직원 검색
+	public List<MemberVo> searchMember(String searchWord) throws Exception;
 }

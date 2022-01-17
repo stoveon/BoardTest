@@ -15,6 +15,7 @@
   
 	    <typeAlias alias="boardVo" type="com.mysite.vo.BoardVo"/>
 	    <typeAlias alias="memberVo" type="com.mysite.vo.MemberVo"/>
+	    <typeAlias alias="memUpCmd" type="com.mysite.vo.MemberUpdateCommand"/>
         
 	</typeAliases>
  	
