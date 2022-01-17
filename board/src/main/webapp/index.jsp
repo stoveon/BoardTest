@@ -4,7 +4,8 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h2>Hello World!</h2>
-<a href="<c:url value="boardIn" />">게시글 등록</a>
+<h2>INDEX PAGE</h2>
+<a href="<c:url value="/memberIn" />">직원 정보 등록</a><br>
+<a href="<c:url value="/memberLi" />">직원 목록 조회</a>
 </body>
 </html>

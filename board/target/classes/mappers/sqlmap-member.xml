@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="memberDao">
+	<select id="memberListAll" resultType="memberVo">
+		select NUM, MEMBERRANK, NAME, PHONE, EMAIL
+		from MEMBER
+		order by NAME asc
+	</select>
+	
+	<select id="memberExist" parameterType="Integer" resultType="memberVo">
+		select NUM, MEMBERRANK, NAME, PHONE, EMAIL
+		from MEMBER
+		where NUM=#{num}
+	</select>
+	
+	<select id="memberSearch" parameterType="String" resultType="memberVo">
+		select NUM, MEMBERRANK, NAME, PHONE, EMAIL
+		from MEMBER
+		where <![CDATA[ cast(NUM as char) like '%'#{searchWord}'%']]> 
+		or <![CDATA[MEMBERRANK like '%' || #{searchWord} || '%']]> 
+		or <![CDATA[NAME like  '%' || #{searchWord} || '%']]> 
+		or <![CDATA[PHONE like '%' || #{searchWord} || '%']]> 
+		or <![CDATA[EMAIL like '%' || #{searchWord} || '%']]> 
+	</select>
+	
+	<insert id="memberRegist" parameterType="memberVo">
+		insert into
+		MEMBER(NUM, MEMBERRANK, NAME, PHONE, EMAIL)
+		values(#{num}, #{memberRank}, #{name}, #{phone}, #{email})
+	</insert>
+	
+	<delete id="memberDelete" parameterType="Integer">
+		delete from MEMBER where NUM=#{num}
+	</delete>
+	
+	<update id="memberUpdate" parameterType="memberVo">
+		update MEMBER
+		set NUM=#{num}, MEMBERRANK=#{memberRank}, NAME=#{name}, PHONE=#{phone}, EMAIL=#{email}
+		where num=#{num}
+	</update>
+</mapper>
