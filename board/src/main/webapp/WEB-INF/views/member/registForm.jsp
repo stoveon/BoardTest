@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>등록 페이지</title>
+<title>직원 등록 페이지</title>
 <script type="text/javascript">
 let reg = "<c:out value="${reg}" />";
 if(reg === 'isnull'){

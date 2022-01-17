@@ -19,7 +19,7 @@ if(reg === 'isnull'){
 </head>
 <body>
 <div class="RegMain">
-	<h2>직원 등록</h2>
+	<h2>직원 정보 수정</h2>
 	<form method="post">
 	<input type="hidden" name="agoNum" value="${num}">
 	직원 번호 : <input type="text" name="num" placeholder="직원번호" maxlength="3" value="${num}"><br>
