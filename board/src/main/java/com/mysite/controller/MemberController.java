@@ -1,8 +1,10 @@
 package com.mysite.controller;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mysite.service.MemberServiceImple;
@@ -23,7 +25,7 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	private static final String patternNumber = "^[0-9]*$";
 	private static final String patternName = "^[가-힣a-zA-Z]*$";
-	private static final String patternPhone = "^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$";
+	private static final String patternPhone = "^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$";
 	private static final String patternEmail = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}";
 	
 	@Autowired
@@ -176,6 +178,27 @@ public class MemberController {
 		view.addObject("memberList", memberList);
 		view.addObject("searchWord", searchWord);
 		view.setViewName("member/memberList");
+		return view;
+	}
+	
+	@RequestMapping(value="/downDoc")
+	public ModelAndView downloadDoc(@RequestParam(required=false) String searchWord) throws Exception{
+		logger.info("파일 다운로드 요청");
+		ModelAndView view = new ModelAndView();
+		List<MemberVo> memberList;
+		if(searchWord != null) {
+			memberList = memberService.searchMember(searchWord);
+		}else {
+			memberList = memberService.memberListAll();
+		}
+		for(MemberVo m : memberList) {
+			System.out.println(m.toString());
+		}
+		Date todayTime = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
+		String str = sdf.format(todayTime);
+        memberService.WriteListToExcelFile("result_" + str + ".xlsx", memberList);
+        view.setViewName("redirect:memberLi");
 		return view;
 	}
 }

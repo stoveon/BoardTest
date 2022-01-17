@@ -42,7 +42,7 @@ public class MemberDaoImple implements IMemberDao{
 
 	@Override
 	public List<MemberVo> searchMember(String searchWord) throws Exception {
-		return sqlSessionTemplate.selectList("searchMember");
+		return sqlSessionTemplate.selectList("searchMember", searchWord);
 	}
 
 }
