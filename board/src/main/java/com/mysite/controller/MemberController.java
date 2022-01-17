@@ -1,10 +1,7 @@
 package com.mysite.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Pattern;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mysite.service.MemberServiceImple;
@@ -180,25 +176,6 @@ public class MemberController {
 		view.setViewName("member/memberList");
 		return view;
 	}
-	
-	@RequestMapping(value="/downDoc")
-	public ModelAndView downloadDoc(@RequestParam(required=false) String searchWord) throws Exception{
-		logger.info("파일 다운로드 요청");
-		ModelAndView view = new ModelAndView();
-		List<MemberVo> memberList;
-		if(searchWord != null) {
-			memberList = memberService.searchMember(searchWord);
-		}else {
-			memberList = memberService.memberListAll();
-		}
-		for(MemberVo m : memberList) {
-			System.out.println(m.toString());
-		}
-		Date todayTime = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
-		String str = sdf.format(todayTime);
-        memberService.WriteListToExcelFile("result_" + str + ".xlsx", memberList);
-        view.setViewName("redirect:memberLi");
-		return view;
-	}
+
+
 }

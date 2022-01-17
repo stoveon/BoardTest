@@ -18,6 +18,4 @@ public interface IMemberService {
 	public void memberUpdate(MemberUpdateCommand memUpCmd) throws Exception;
 	//직원 검색
 	public List<MemberVo> searchMember(String searchWord) throws Exception;
-	//엑셀 다운로드
-	public void WriteListToExcelFile(String fileName, List<MemberVo> noticeList) throws Exception;
 }

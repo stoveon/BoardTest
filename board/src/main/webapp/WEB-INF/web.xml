@@ -86,5 +86,12 @@
 		<location>/error/pageError</location>
 	</error-page>
 
-	
+	<mime-mapping>
+        <extension>kml</extension>
+        <mime-type>application/vnd.google-earth.kml+xml</mime-type>
+    </mime-mapping>
+    <mime-mapping>
+        <extension>kmz</extension>
+        <mime-type>application/vnd.google-earth.kmz</mime-type>
+    </mime-mapping >
 </web-app>
